@@ -1,0 +1,44 @@
+package jcbhmr:evalexpr-evalexpr@12.0.2;
+
+interface x {
+  use error.{evalexpr-error};
+
+  eval: func(string: string) -> result<value, evalexpr-error>;
+
+  variant value {
+    string(string),
+    float(f64),
+    int(s64),
+    boolean(bool),
+    tuple(list<value>),
+    empty,
+  }
+
+  build-operator-tree: func(string: string) -> result<node, evalexpr-error>;
+
+  resource node {
+    children: func() -> list<node>;
+    eval: func() -> result<value, evalexpr-error>;
+    iter: func() -> list<node>;
+  }
+}
+
+interface error {
+  variant evalexpr-error {
+    wrong-operator-argument-amount(evalexpr-error-wrong-operator-argument-amount),
+    wrong-function-argument-amount(evalexpr-error-wrong-function-argument-amount),
+  }
+  record evalexpr-error-wrong-operator-argument-amount {
+    expected: u32,
+    actual: u32,
+  }
+  record evalexpr-error-wrong-function-argument-amount {
+    expected: u32,
+    actual: u32,
+  }
+}
+
+world evalexpr {
+  export x;
+  export error;
+}
