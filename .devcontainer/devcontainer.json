@@ -1,0 +1,11 @@
+{
+    "image": "mcr.microsoft.com/devcontainers/rust",
+    "updateContentCommand": "rustup target add wasm32-wasip2 && cargo install --locked wkg",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "BytecodeAlliance.wit-idl"
+            ]
+        }
+    }
+}
